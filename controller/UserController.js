@@ -1,4 +1,4 @@
-const userController = require("../Models/UserSchema");
+const userController = require("../models/UserSchema");
 const Crypto = require("crypto-js");
 const Jwt = require("jsonwebtoken");
 
