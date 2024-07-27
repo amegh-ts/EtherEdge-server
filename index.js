@@ -9,6 +9,7 @@ app.use(cors());
 dotenv.config();
 
 const userRoutes = require("./routes/UserRoutes");
+const publicRoutes = require("./routes/PublicRoutes");
 
 mongoose.connect(process.env.Mongo_Key).then(() => {
   console.log("Database Connected");
@@ -17,6 +18,7 @@ mongoose.connect(process.env.Mongo_Key).then(() => {
 app.use(express.json());
 
 app.use("/", userRoutes);
+app.use("/", publicRoutes);
 
 app.listen(PORT, () => {
   console.log("Connected to Server on Port", PORT);
