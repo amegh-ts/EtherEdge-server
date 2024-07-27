@@ -8,7 +8,7 @@ const PORT = 5000;
 app.use(cors());
 dotenv.config();
 
-const userRoutes = require("./Routes/UserRoutes");
+const userRoutes = require("./routes/UserRoutes");
 
 mongoose.connect(process.env.Mongo_Key).then(() => {
   console.log("Database Connected");
