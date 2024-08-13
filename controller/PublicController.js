@@ -43,4 +43,19 @@ const getDbStats = async (req, res) => {
   }
 };
 
-module.exports = { getDbStats };
+const getServerStatus = (req, res) => {
+  try {
+    const serverStatus = {
+      status: "Running",
+      uptime: process.uptime() + " seconds",
+      timestamp: new Date(),
+    };
+
+    res.status(200).json(serverStatus);
+  } catch (error) {
+    console.error("Error fetching server status:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+module.exports = { getDbStats, getServerStatus };
