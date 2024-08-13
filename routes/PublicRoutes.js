@@ -1,4 +1,7 @@
-const { getDbStats } = require("../controller/PublicController");
+const {
+  getDbStats,
+  getServerStatus,
+} = require("../controller/PublicController");
 
 const router = require("express").Router();
 
