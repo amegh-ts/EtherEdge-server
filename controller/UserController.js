@@ -192,6 +192,12 @@ const deleteProfile = async (req, res) => {
 
 // Get all users
 const allUsers = async (req, res) => {
+  if (req.user.type !== "admin") {
+    return res.status(403).json({
+      success: false,
+      error: "You are not authorized to perform this action.",
+    });
+  }
   try {
     const data = await userController.find();
     res.status(200).json({
