@@ -13,6 +13,7 @@ const UserSchema = new mongoose.Schema(
     image: { type: String },
     about: { type: String },
     lastLogin: { type: String },
+    state: { type: String },
   },
   { timestamps: true }
 ); //to add the date and time the value is added to DB or edited

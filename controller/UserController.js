@@ -22,12 +22,12 @@ setInterval(setUserState, 60 * 60 * 1000);
 
 // Signup
 const signUp = async (req, res) => {
-  console.log("req.body", req.body);
   req.body.password = Crypto.AES.encrypt(
     req.body.password,
     process.env.Crypto_js
   ).toString();
   req.body.lastLogin = Date.now();
+  console.log("req.body", req.body);
 
   try {
     const existingUser = await userController.findOne({
@@ -50,21 +50,16 @@ const signUp = async (req, res) => {
 
 //signin
 const signIn = async (req, res) => {
-  console.log(
-    "----------------------------------------------------------------------------------------------------------------------------"
-  );
   try {
     const DB = await userController.findOne({ email: req.body.email });
     !DB && res.status(401).json({ response: "Please check Your Email" });
 
-    console.log(DB.state);
     if (DB.state == "inactive") {
       const dataone = await userController.findByIdAndUpdate(
         DB._id,
         { $set: { state: "active" } },
         { new: true }
       );
-      console.log("Updated to active", dataone);
     }
 
     const updatedata = await userController.findById(DB._id);
