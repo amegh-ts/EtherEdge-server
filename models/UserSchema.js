@@ -8,12 +8,12 @@ const UserSchema = new mongoose.Schema(
     password: { type: String, required: true },
     type: { type: String, required: true },
     phone: { type: String },
-    firstName: { type: String },
-    lastName: { type: String },
+    fullName: { type: String },
     image: { type: String },
     about: { type: String },
     lastLogin: { type: String },
     state: { type: String },
+    isVerified: { type: Boolean },
   },
   { timestamps: true }
 ); //to add the date and time the value is added to DB or edited
