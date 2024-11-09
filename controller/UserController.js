@@ -27,6 +27,7 @@ const signUp = async (req, res) => {
     req.body.password,
     process.env.Crypto_js
   ).toString();
+  req.body.type = "user";
   req.body.lastLogin = Date.now();
 
   try {
