@@ -10,23 +10,23 @@ const router = require("express").Router();
 
 // view profile
 router.get(
-  "/Viewprofile/:id",
+  "/Viewprofile",
   verifyToken,
-  verifyTokenAndAuthorization,
+  // verifyTokenAndAuthorization,
   viewProfile
 );
 // edit profile
 router.put(
   "/editprofile/:id",
   verifyToken,
-  verifyTokenAndAuthorization,
+  // verifyTokenAndAuthorization,
   editProfile
 );
 // delete profile
 router.delete(
   "/deleteProfile/:id",
   verifyToken,
-  verifyTokenAndAuthorization,
+  // verifyTokenAndAuthorization,
   deleteProfile
 );
 // all users
