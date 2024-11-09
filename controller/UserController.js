@@ -96,9 +96,13 @@ const signIn = async (req, res) => {
       $set: { lastLogin: Date.now() },
     });
 
-    const accessToken = Jwt.sign({ id: DB._id }, process.env.Jwt_Key, {
-      expiresIn: "1d",
-    });
+    const accessToken = Jwt.sign(
+      { id: DB._id, type: DB.type },
+      process.env.Jwt_Key,
+      {
+        expiresIn: "1d",
+      }
+    );
     const { password, ...others } = DB._doc;
     res.status(200).json({
       success: true,
@@ -120,7 +124,7 @@ const signIn = async (req, res) => {
 // View profile
 const viewProfile = async (req, res) => {
   try {
-    const id = await userController.findById(req.params.id);
+    const id = await userController.findById(req.user.id);
     const hashedPassword = Crypto.AES.decrypt(
       id.password,
       process.env.Crypto_js
@@ -188,6 +192,12 @@ const deleteProfile = async (req, res) => {
 
 // Get all users
 const allUsers = async (req, res) => {
+  if (req.user.type !== "admin") {
+    return res.status(403).json({
+      success: false,
+      error: "You are not authorized to perform this action.",
+    });
+  }
   try {
     const data = await userController.find();
     res.status(200).json({

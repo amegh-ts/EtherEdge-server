@@ -1,8 +1,8 @@
 const jwt = require("jsonwebtoken");
 
-// Code to check the token is correct
+// Middleware to check if the token is valid
 const verifyToken = (req, res, next) => {
-  let authHeader = req.headers.token;
+  const authHeader = req.headers.token;
 
   if (authHeader) {
     const token = authHeader.split(" ")[1];
@@ -14,7 +14,7 @@ const verifyToken = (req, res, next) => {
     jwt.verify(token, process.env.Jwt_Key, (err, user) => {
       if (err) {
         console.log("Token Verification Error", err);
-        return res.status(403).json("This token is not valid");
+        return res.status(403).json({ error: "This token is not valid" });
       }
       req.user = user;
       next();
@@ -24,15 +24,18 @@ const verifyToken = (req, res, next) => {
   }
 };
 
-//code to check if id matches
+// Middleware to check if the token is valid and if the user ID matches
 const verifyTokenAndAuthorization = (req, res, next) => {
-  verifyToken(req, res, (data) => {
-    if (req.user.id === req.params.id) {
-      console.log("successful");
+  verifyToken(req, res, () => {
+
+    console.log(req.user);
+    
+    if (req.user && req.user.id === req.params.id) {
+      console.log("Authorization successful");
       next();
     } else {
-      console.log("Id's doesn't match");
-      return res.status(403).json("You are not allowed");
+      console.log("User ID does not match");
+      return res.status(403).json({ error: "You are not allowed" });
     }
   });
 };
