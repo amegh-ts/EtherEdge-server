@@ -146,6 +146,36 @@ const viewProfile = async (req, res) => {
   }
 };
 
+// edit profile image
+const editProfileImage = async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ message: "No file uploaded" });
+    }
+
+    const imageUrl = req.file.path;
+
+    // Update user's profile image URL in the database
+    const updatedUser = await userController.findByIdAndUpdate(
+      req.user.id,
+      { profileImage: imageUrl },
+      { new: true }
+    );
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json({
+      message: "Profile image updated successfully",
+      profileImage: imageUrl,
+    });
+  } catch (error) {
+    console.error("Error updating profile image:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
 // Edit profile
 const editProfile = async (req, res) => {
   try {
@@ -219,6 +249,7 @@ module.exports = {
   signUp,
   signIn,
   viewProfile,
+  editProfileImage,
   editProfile,
   deleteProfile,
   allUsers,

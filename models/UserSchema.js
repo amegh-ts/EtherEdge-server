@@ -14,6 +14,7 @@ const UserSchema = new mongoose.Schema(
     lastLogin: { type: String },
     state: { type: String },
     isVerified: { type: Boolean },
+    profileImage: { type: String },
   },
   { timestamps: true }
 ); //to add the date and time the value is added to DB or edited
