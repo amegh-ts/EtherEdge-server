@@ -180,12 +180,17 @@ const editProfileImage = async (req, res) => {
 const editProfile = async (req, res) => {
   try {
     const updateData = await userController.findByIdAndUpdate(
-      req.params.id,
+      req.user.id,
       { $set: req.body },
       { new: true }
     );
+
+    if (!updateData) {
+      return res.status(404).json({
+        message: "Profile not found",
+      });
+    }
     res.status(200).json({
-      success: true,
       message: "Profile updated successfully",
       user: updateData,
     });

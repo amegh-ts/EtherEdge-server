@@ -20,7 +20,7 @@ router.put(
   editProfileImage
 );
 // edit profile
-router.put("/editprofile/:id", verifyToken, editProfile);
+router.put("/editprofile", verifyToken, editProfile);
 // delete profile
 router.delete("/deleteProfile/:id", verifyToken, deleteProfile);
 // all users
